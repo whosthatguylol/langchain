@@ -370,6 +370,7 @@ exclude = [
 ignore_missing_imports = "True"
 disallow_untyped_defs = "True"
 exclude = ["notebooks", "examples", "example_data"]
+enable_incomplete_feature = "Unpack"
 
 [tool.coverage.run]
 omit = [
