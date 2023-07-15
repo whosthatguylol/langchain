@@ -18,9 +18,9 @@ class BasePromptTemplate(Serializable, ABC):
     """Base class for all prompt templates, returning a prompt."""
 
     input_variables: List[str]
-    """A list of the names of the variables the prompt template expects."""
+    """List: variables names expected to format this template."""
     output_parser: Optional[BaseOutputParser] = None
-    """How to parse the output of calling an LLM on this formatted prompt."""
+    """(optional) OutputParser: output parser used for this template."""
     partial_variables: Mapping[str, Union[str, Callable[[], str]]] = Field(
         default_factory=dict
     )
