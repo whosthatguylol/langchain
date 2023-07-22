@@ -15,7 +15,10 @@ from langchain.schema.prompt import PromptValue
 
 
 class BasePromptTemplate(Serializable, ABC):
-    """Base class for all prompt templates, returning a prompt."""
+    """Base model: for a Prompt Template -> to return a Formatted Prompt.
+    
+    Usage: `self.format(**input_var1=value1, ...)`.
+    """
 
     input_variables: List[str]
     """List: variables names expected to format this template."""
@@ -23,7 +26,7 @@ class BasePromptTemplate(Serializable, ABC):
     """(optional) OutputParser: output parser used for this template."""
     partial_variables: Mapping[str, Union[str, Callable[[], str]]] = Field(
         default_factory=dict
-    )
+    ) 
 
     @property
     def lc_serializable(self) -> bool:
