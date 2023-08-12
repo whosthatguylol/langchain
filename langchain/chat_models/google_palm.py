@@ -209,7 +209,6 @@ async def achat_with_retry(llm: ChatGooglePalm, **kwargs: Any) -> Any:
 
     @retry_decorator
     async def _achat_with_retry(**kwargs: Any) -> Any:
-        # Use OpenAI's async api https://github.com/openai/openai-python#async-api
         return await llm.client.chat_async(**kwargs)
 
     return await _achat_with_retry(**kwargs)
@@ -237,6 +236,7 @@ class ChatGooglePalm(BaseChatModel, BaseModel):
     model_name: str = "models/chat-bison-001"
     """Model name to use."""
     google_api_key: Optional[str] = None
+    client_options: Optional[str] = None
     temperature: Optional[float] = None
     """Run inference with this temperature. Must by in the closed
        interval [0.0, 1.0]."""
@@ -258,8 +258,8 @@ class ChatGooglePalm(BaseChatModel, BaseModel):
         )
         try:
             import google.generativeai as genai
-
-            genai.configure(api_key=google_api_key)
+            client_options={"api_endpoint":google_api_endpoint}if google_api_endpoint else {}
+            genai.configure(api_key=google_api_key, client_options)
         except ImportError:
             raise ChatGooglePalmError(
                 "Could not import google.generativeai python package. "
